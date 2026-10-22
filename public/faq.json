@@ -1,182 +1,75 @@
 [
- {
-  "q": "¿Qué materias hay en primer año?",
-  "kw": "primer primero 1ro",
-  "a": "Primer año: Álgebra, Análisis Matemático, Programación I, Ciencia y TIC, Base de Datos, Redes, Prácticas Profesionalizantes I y EDI I."
- },
- {
-  "q": "¿Qué materias hay en segundo año?",
-  "kw": "segundo 2do",
-  "a": "Segundo año: Inglés Técnico, Ciencia de Datos, Estadística y Probabilidad, Programación II, Lógica, Introducción a la Inteligencia Artificial, Machine Learning, Prácticas Profesionalizantes II y EDI II."
- },
- {
-  "q": "¿Qué materias hay en tercer año?",
-  "kw": "tercer tercero 3ro ultimo",
-  "a": "Tercer año: Gestión de Proyectos, Minería de Datos, Reconocimiento Visual, Ciberseguridad, Ética y Deontología Profesional, Analítica Web, Procesamiento del Lenguaje Natural y Prácticas Profesionalizantes III."
- },
- {
-  "q": "¿Qué materias tiene la carrera?",
-  "kw": "materias asignaturas plan estudios cursan curricula contenidos",
-  "a": "Son 25 materias anuales repartidas en 3 años. Preguntame por las de primer, segundo o tercer año y te las detallo.",
-  "s": 1
- },
- {
-  "q": "¿Cuánto dura la carrera?",
-  "kw": "dura duracion tiempo anos largo",
-  "a": "Dura 3 años, con modalidad presencial. En total son 2912 horas cátedra (aprox. 1941 horas reloj).",
-  "s": 2
- },
- {
-  "q": "¿Qué título otorga?",
-  "kw": "titulo otorga egresa recibo certificado diploma",
-  "a": "Otorga el título de Técnico/a Superior en Ciencia de Datos e Inteligencia Artificial.",
-  "s": 13
- },
- {
-  "q": "¿Dónde se dicta?",
-  "kw": "donde sede instituto lugar dicta perico ies queda ubicada ubicado ubicacion direccion mapa",
-  "a": "Se dicta en el IES N° 6 de la ciudad de Perico, Jujuy. Ubicación en el mapa: https://maps.app.goo.gl/56ggLMxuvPZYxioj8 — Web del instituto: ifdc6m-juj.infd.edu.ar",
-  "s": 21
- },
- {
-  "q": "¿En qué horario se cursa?",
-  "kw": "horario hora cursa cursada turno noche tarde",
-  "a": "La cursada es de 18:30 a 22:40.",
-  "s": 3
- },
- {
-  "q": "¿Es presencial o virtual?",
-  "kw": "presencial virtual online distancia",
-  "a": "La modalidad es presencial."
- },
- {
-  "q": "¿Qué requisitos de ingreso hay?",
-  "kw": "requisitos ingreso ingresar condiciones secundario medio polimodal",
-  "a": "Hay que tener título de nivel medio o polimodal. Los mayores de 25 años sin secundario terminado pueden acogerse a la Resolución 114-SE-02 de Jujuy. Se presentan documentos personales y académicos según la normativa vigente.",
-  "s": 4
- },
- {
-  "q": "¿Cuándo es la inscripción y cómo me inscribo?",
-  "a": "La inscripción se hace en línea desde nexo.jujuy.edu.ar. Las fechas del período no las tengo cargadas: consultalas en la página oficial del instituto (ifdc6m-juj.infd.edu.ar) o en la secretaría del IES N° 6 de Perico. Para ingresar necesitás título de nivel medio (los mayores de 25 años tienen otra vía) y en 2026 se tomó un examen parcial de ingreso.",
-  "kw": "inscripcion inscribir inscribirme inscribo anotar anotarme preinscripcion fechas abre abren cuando",
-  "s": 6,
-  "sd": 1
- },
- {
-  "q": "¿Cuánto cuesta la carrera?",
-  "a": "Es de gestión estatal, pero tiene un mínimo para abonar por única vez. El monto exacto no lo tengo: consultalo en la secretaría del IES N° 6 de Perico.",
-  "kw": "costo costos cuesta cuota arancel precio pagar pago gratis gratuita gratuito matricula",
-  "s": 7,
-  "sd": 1
- },
- {
-  "q": "¿Hay becas o beneficios para estudiantes?",
-  "a": "Sí: el instituto está adherido al BEGUP (Boleto Educativo Gratuito Provincial) y a las Becas Progresar.",
-  "kw": "beca becas progresar begup boleto beneficio beneficios",
-  "s": 8
- },
- {
-  "q": "¿Cómo me comunico con la secretaría?",
-  "a": "No tengo teléfono ni mail de la secretaría cargados. Podés consultar en la página oficial del instituto (ifdc6m-juj.infd.edu.ar) o acercarte al IES N° 6 de Perico.",
-  "kw": "contacto contactar telefono mail correo secretaria comunicar comunico whatsapp",
-  "sd": 1
- },
- {
-  "q": "¿Qué hace un técnico en Ciencia de Datos e IA?",
-  "kw": "perfil egresado aprendo aprender sirve funciones tareas",
-  "a": "Explora y prepara datos, crea modelos de Machine Learning (predicción, recomendación, clustering), redes neuronales, visión por computadora, chatbots y procesamiento de lenguaje, visualiza resultados y gestiona proyectos.",
-  "s": 12
- },
- {
-  "q": "¿Qué salida laboral tiene?",
-  "kw": "laboral trabajo empleo trabajar salida ocupacional sueldo profesion",
-  "a": "Puede trabajar en salud, agro, marketing, finanzas, banca, telefonía y cualquier organización que analice datos, integrar equipos de informática o dirigir emprendimientos propios de pequeña o mediana escala.",
-  "s": 5
- },
- {
-  "q": "¿Hay mucha matemática?",
-  "kw": "matematica algebra analisis calculo estadistica probabilidad logica",
-  "a": "Sí, es la base: Álgebra y Análisis Matemático en 1° año, y Estadística y Probabilidad y Lógica en 2°.",
-  "s": 10
- },
- {
-  "q": "¿Qué lenguajes de programación se ven?",
-  "kw": "programacion programar lenguaje lenguajes python codigo",
-  "a": "Hay Programación I y II. En Programación I se trabaja con Python, estructuras de datos y algoritmos.",
-  "s": 14
- },
- {
-  "q": "¿Se ve Inteligencia Artificial y Machine Learning?",
-  "kw": "inteligencia artificial machine learning deep redes neuronales vision lenguaje",
-  "a": "Sí: Introducción a la IA y Machine Learning en 2° año; Reconocimiento Visual, Procesamiento del Lenguaje Natural y Minería de Datos en 3°.",
-  "s": 11
- },
- {
-  "q": "¿Qué son las prácticas profesionalizantes?",
-  "kw": "practicas profesionalizantes pasantias",
-  "a": "Son espacios de práctica en los tres años (I, II y III), que se aprueban solo por promoción. Suman 416 horas cátedra.",
-  "s": 20
- },
- {
-  "q": "¿Cómo se aprueban las materias?",
-  "kw": "aprueban aprobar promocion promocional examen final rendir",
-  "a": "Las materias se aprueban por promoción o con examen final; las Prácticas Profesionalizantes son solo promocionales."
- },
- {
-  "q": "¿Qué son los EDI?",
-  "kw": "edi definicion institucional",
-  "a": "Los EDI (Espacios de Definición Institucional) son materias cuyos temas define cada instituto con su coordinador y docentes, según las necesidades de la región."
- },
- {
-  "q": "¿Cuáles son las correlatividades?",
-  "kw": "correlativas correlatividades correlativa",
-  "sd": 1,
-  "a": "No tengo ese dato cargado. Consultalo en la secretaría del IES N° 6 de Perico."
- },
- {
-  "q": "¿Quién es el coordinador de la carrera?",
-  "a": "El coordinador de la carrera es Torres Federico.",
-  "kw": "coordinador coordinadora coordina autoridad responsable",
-  "s": 15
- },
- {
-  "q": "¿Con qué infraestructura cuenta el instituto?",
-  "a": "Tiene biblioteca institucional (se pueden solicitar netbooks para usar dentro de las horas de clase), servicio de fotocopiadora y conexión a Internet por red Starlink.",
-  "kw": "biblioteca netbook netbooks computadoras fotocopiadora fotocopias internet wifi starlink infraestructura instalaciones",
-  "s": 16
- },
- {
-  "q": "¿Hay centro de estudiantes?",
-  "a": "Sí, hay un Centro de Estudiantes activo. Su presidente es Nicolás Sivila.",
-  "kw": "centro estudiantes presidente",
-  "s": 17
- },
- {
-  "q": "¿Hay pasantías o convenios con empresas?",
-  "a": "Para 2026 hay convenios de pasantía con Red Impulso y Canal 2 de Perico.",
-  "kw": "pasantia pasantias convenio convenios impulso canal empresas",
-  "s": 18
- },
- {
-  "q": "¿Necesito conocimientos previos?",
-  "a": "No se requieren conocimientos previos. Igual es aconsejable tener un perfil autodidacta para prepararte bien para el ingreso.",
-  "kw": "previos previo conocimientos saber necesito autodidacta nivel base",
-  "s": 9
- },
- {
-  "q": "¿Cómo me recibo? ¿Hay proyecto final?",
-  "a": "Para titularte tenés que presentar y aprobar el proyecto final en el marco de la materia Prácticas Profesionalizantes III.",
-  "kw": "proyecto final tesis titularme titulacion recibirme",
-  "s": 19
- },
- {
-  "q": "¿Puedo pedir equivalencias de materias?",
-  "a": "Las consultas por equivalencias u homologaciones se hacen directamente en la Secretaría Académica del IES N° 6.",
-  "kw": "equivalencia equivalencias homologacion homologaciones"
- },
- {
-  "q": "¿Hay tutorías o apoyo académico?",
-  "a": "Durante 2026 se implementó un espacio de tutoría por resolución. Para 2027 todavía no hay definiciones.",
-  "kw": "tutoria tutorias apoyo academico"
- }
+  {
+    "id": "evento_ropa_proximo",
+    "pregunta": "¿Dónde hay un evento de ropa o indumentaria próxima?",
+    "respuesta": "¡Tenemos varias propuestas de diseño y textiles locales programadas! Podés ver todos los detalles e inscribirte directamente haciendo clic en el siguiente enlace de la plataforma.",
+    "enlace": "https://munissj.gob.ar/emprende/eventos-ropa",
+    "categoria": "Eventos proximos"
+  },
+  {
+    "id": "inscripcion_recordatorios",
+    "pregunta": "¿Cómo me inscribo a un evento próximo y recibo recordatorios?",
+    "respuesta": "Te anotás seleccionando el taller o feria próxima en el chat y dejando tu número de celular. El sistema te enviará un recordatorio por WhatsApp 24 horas antes con la ubicación exacta y el código QR de acceso.",
+    "categoria": "Eventos proximos"
+  },
+  {
+    "id": "cancelar_asistencia",
+    "pregunta": "¿Qué pasa si me inscribí a un evento próximo pero a última hora no puedo asistir?",
+    "respuesta": "¡No te preocupes! Podés cancelar tu asistencia de manera automática respondiendo al mensaje de WhatsApp de recordatorio o desde tu perfil en la plataforma para liberar el cupo.",
+    "categoria": "Eventos proximos"
+  },
+  {
+    "id": "mal_tiempo_eventos",
+    "pregunta": "¿Los eventos próximos al aire libre se suspenden por mal tiempo (lluvia o viento zonda)?",
+    "respuesta": "En caso de condiciones climáticas adversas que afecten los espacios abiertos (como Plaza Belgrano o Parque San Martín), el municipio notifica la reprogramación o el traslado a un espacio cubierto a través de una alerta automática con 12 horas de anticipación.",
+    "categoria": "Eventos proximos"
+  },
+  {
+    "id": "consultar_eventos_pasados",
+    "pregunta": "¿Puedo ver la galería, fotos o el impacto de eventos pasados que ya se realizaron?",
+    "respuesta": "¡Sí! En la sección de archivo de la plataforma web y el historial del chatbot podés consultar el resumen, cantidad de asistentes y reportes de ferias o capacitaciones ya finalizadas.",
+    "categoria": "Eventos pasados"
+  },
+  {
+    "id": "certificados_eventos_pasados",
+    "pregunta": "¿Cómo descargo mi certificado de asistencia a un taller o capacitación que ya pasó?",
+    "respuesta": "Si asististe y completaste un taller municipal pasado, el certificado digital se habilita automáticamente en tu perfil de la plataforma para su descarga en PDF.",
+    "categoria": "Eventos pasados"
+  },
+  {
+    "id": "club_emprendedores_horario",
+    "pregunta": "¿Dónde queda el Club de Emprendedores y cuáles son sus horarios?",
+    "respuesta": "La sede principal está en Alto Comedero, funcionando en red con otros espacios. Sus horarios varían según la programación de cada evento, operando por lo general de 8:00 a 20:00 hs. Ofrece coworking, salas de reuniones y capacitaciones.",
+    "categoria": "Requisitos Emprededor"
+  },
+  {
+    "id": "cpv_actividades",
+    "pregunta": "¿Qué son los CPV y qué actividades tienen?",
+    "respuesta": "Los Centros de Participación Vecinal descentralizan la atención. El CPV Chijra se enfoca en capacitaciones de oficios y ferias barriales, mientras que el CPV Malvinas ofrece asesoramiento en finanzas y costos.",
+    "categoria": "Requisitos Emprededor"
+  },
+  {
+    "id": "stands_ferias_requisitos",
+    "pregunta": "¿Cómo puedo conseguir un stand o puesto para vender en las ferias municipales?",
+    "respuesta": "Debes estar previamente inscripto en el Padrón Municipal de Emprendedores. Si tu rubro es gastronómico, también es requisito contar con el carnet de bromatología al día. Podés iniciar tu postulación de forma digital desde el chatbot.",
+    "categoria": "Requisitos Emprededor"
+  },
+  {
+    "id": "costo_actividades",
+    "pregunta": "¿Tiene costo participar en las ferias o talleres del municipio?",
+    "respuesta": "No, todas las actividades organizadas por la Secretaría de Planificación, Desarrollo y Modernización de San Salvador de Jujuy son totalmente gratuitas.",
+    "categoria": "Requisitos Emprededor"
+  },
+  {
+    "id": "creditos_financiamiento",
+    "pregunta": "¿Cómo puedo acceder a créditos blandos, subsidios o financiamiento municipal para mi emprendimiento?",
+    "respuesta": "El acceso a líneas de financiamiento y microcréditos impulsados por la Municipalidad de San Salvador de Jujuy requiere obligatoriamente estar registrado en el Padrón Municipal de Emprendedores y haber completado al menos un ciclo de capacitación en gestión o costos.",
+    "categoria": "Requisitos Emprededor"
+  },
+  {
+    "id": "asesoramiento_legal",
+    "pregunta": "¿Puedo recibir asesoramiento legal o contable gratuito para formalizar mi negocio?",
+    "respuesta": "Sí. A través del área de desarrollo económico municipal y las oficinas descentralizadas (como el CPV Malvinas), se brindan asesorías gratuitas sobre inscripción en AFIP, Rentas y monotributo social.",
+    "categoria": "Requisitos Emprededor"
+  }
 ]
