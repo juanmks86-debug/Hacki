@@ -1,0 +1,46 @@
+[
+  {
+    "id": "taller_copla",
+    "titulo": "Taller de Copla",
+    "sede": "Club de Emprendedores / Salón Cultural",
+    "horario": "20:00 a 00:00 hs",
+    "precio": "Consultar Soporte",
+    "ubicacion": "San Salvador de Jujuy",
+    "categoria": "Eventos proximos",
+    "descripcion": "Encuentro cultural y musical de coplas tradicionales.",
+    "enlace": "https://munissj.gob.ar/emprende/taller-copla"
+  },
+  {
+    "id": "feria_xibi_xibi",
+    "titulo": "Feria Emprendedores - Xibi Xibi",
+    "sede": "Parque Lineal Xibi Xibi (Av. 19 de Abril)",
+    "horario": "Sábados de 16:00 a 22:00 hs",
+    "precio": "Gratis",
+    "ubicacion": "Parque Lineal Xibi Xibi, San Salvador de Jujuy",
+    "categoria": "Eventos proximos",
+    "descripcion": "Exposición y venta directa de emprendedores locales al aire libre.",
+    "enlace": "https://munissj.gob.ar/emprende/feria-xibi-xibi"
+  },
+  {
+    "id": "paseo_luces_bandera",
+    "titulo": "Paseo de las Luces y Salón de la Bandera",
+    "sede": "Casco Histórico / Salón de la Bandera",
+    "horario": "Viernes a Domingo de 19:30 a 00:00 hs",
+    "precio": "Gratis",
+    "ubicacion": "Centro de San Salvador de Jujuy",
+    "categoria": "Eventos proximos",
+    "descripcion": "Recorrido histórico, cultural y lumínico institucional.",
+    "enlace": "https://munissj.gob.ar/emprende/paseo-luces"
+  },
+  {
+    "id": "artista_al_publico",
+    "titulo": "Del artista al público en Culturarte",
+    "sede": "Culturarte (Esquina San Martín y Sarmiento)",
+    "horario": "De 21:00 a 00:00 hs",
+    "precio": "Gratis",
+    "ubicacion": "San Martín y Sarmiento, Centro",
+    "categoria": "Eventos proximos",
+    "descripcion": "Muestra de arte y exposición directa con creadores locales.",
+    "enlace": "https://munissj.gob.ar/emprende/culturarte"
+  }
+]
