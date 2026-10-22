@@ -209,7 +209,7 @@
     return FAQ.filter(function (f) { return f.s && !preguntadas[f.i]; }).sort(function (a, b) { return a.s - b.s; }).slice(0, n || 3);
   }
   function bienvenida() {
-    agregar("¡Hola! Soy " + nombre + " 👋, tu chatbot de la carrera de Ciencia de Datos e Inteligencia Artificial. ¿En qué te puedo ayudar?", "a");
+    agregar("¡Hola! Soy " + nombre + " 👋, tu chatbot de JujuyTech. ¿En qué te puedo ayudar?", "a");
     agregar("Mis respuestas son orientativas: para trámites consultá en el IES N° 6. Las preguntas que no sé responder se guardan sin datos personales para mejorar.", "nt");
     chips(sugerencias(4));
   }
