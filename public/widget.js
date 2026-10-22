@@ -210,7 +210,7 @@
   }
   function bienvenida() {
     agregar("¡Hola! Soy " + nombre + " 👋, tu chatbot de JujuyTech. ¿En qué te puedo ayudar?", "a");
-    agregar("Mis respuestas son orientativas: para trámites consultá en el IES N° 6. Las preguntas que no sé responder se guardan sin datos personales para mejorar.", "nt");
+    agregar("Mis respuestas son orientativas: para trámites consultá en tu Municipio. Las preguntas que no sé responder se guardan sin datos personales para mejorar.", "nt");
     chips(sugerencias(4));
   }
   bienvenida();
