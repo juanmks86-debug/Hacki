@@ -1,5 +1,5 @@
 {
-  "functions": { "api/chat.js": { "includeFiles": "{conocimiento_carrera.md,public/faq.json}" } },
+  "functions": { "api/chat.js": { "includeFiles": "{conocimiento_ecosistema.md,public/faq.json,public/eventos.json}" } },
   "headers": [
     {
       "source": "/(.*)",
@@ -10,6 +10,13 @@
     },
     {
       "source": "/faq.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/eventos.json",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }

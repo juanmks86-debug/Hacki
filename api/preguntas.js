@@ -3,6 +3,30 @@
 // Variables: ADMIN_KEY (obligatoria), UPSTASH_REDIS_REST_URL y UPSTASH_REDIS_REST_TOKEN.
 // Sin Upstash, las preguntas igual quedan en los logs de Vercel con el prefijo [PREGUNTA] (retención corta).
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+
+const BUSCAR_DIRS = [path.resolve(__dirname, ".."), process.cwd(), __dirname];
+for (const dir of BUSCAR_DIRS) {
+  try {
+    const envFile = path.join(dir, ".env");
+    if (fs.existsSync(envFile)) {
+      const lines = fs.readFileSync(envFile, "utf8").split(/\r?\n/);
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#")) continue;
+        const eqIdx = trimmed.indexOf("=");
+        if (eqIdx > 0) {
+          const k = trimmed.slice(0, eqIdx).trim();
+          const v = trimmed.slice(eqIdx + 1).trim().replace(/^["']|["']$/g, "");
+          if (!process.env[k]) process.env[k] = v;
+        }
+      }
+      break;
+    }
+  } catch (e) {}
+}
+
 const fallos = new Map();
 
 function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }

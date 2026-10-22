@@ -1,98 +1,64 @@
-# Hacki - chatbot de la carrera de Ciencia de Datos e IA (IES N° 6, Perico)
+# Hacki - Asistente Virtual del Ecosistema de Eventos Emprendedores
+### Municipalidad de San Salvador de Jujuy
 
-Hacki es un chat flotante que responde preguntas sobre la Tecnicatura Superior en Ciencia de Datos e Inteligencia Artificial.
-Primero busca la respuesta en las preguntas frecuentes (gratis e instantáneo) y, si no la encuentra, consulta a un modelo de IA que
-responde **solo** con la información de este repositorio.
+Hacki es un asistente virtual flotante (widget) que responde consultas ciudadanas sobre ferias, capacitaciones, talleres, sedes municipales y trámites para emprendedores locales.
 
-## Cómo está armado
+Funciona en dos niveles:
+1. **Nivel 1 (Gratis e instantáneo):** Resuelve de inmediato en el navegador consultando la cartelera de eventos (`public/eventos.json`) y preguntas frecuentes (`public/faq.json`).
+2. **Nivel 2 (Inteligencia Artificial):** Si la consulta no tiene coincidencia exacta en las FAQ, consulta a un modelo de IA (Groq / OpenAI compatible) alimentado estrictamente con `conocimiento_ecosistema.md`, `faq.json` y `eventos.json`.
 
-| Archivo | Para qué sirve |
+---
+
+## Estructura del Proyecto
+
+| Archivo / Carpeta | Descripción |
 |---|---|
-| `public/widget.js` | El chat que se ve en pantalla (burbuja arrastrable, avatar con estados dinámicos, sonidos, voz, modo oscuro). |
-| `public/avatars/` | Sprites e imágenes de Hacki según el estado (pensando, activo, desconectado, voz, etc.). |
-| `public/faq.json` | **Las preguntas y respuestas.** Es la única fuente: la leen el chat y la IA. |
-| `conocimiento_carrera.md` | Información completa de la carrera. La IA la usa cuando la FAQ no alcanza. |
-| `api/chat.js` | Servidor del chat: valida el pedido, limita el uso y consulta a la IA. |
-| `api/preguntas.js` | Lista (protegida con clave) las preguntas que Hacki no supo responder. |
-| `public/index.html` | Página de prueba. |
-| `vercel.json` | Configuración de Vercel (archivos que usa la función y cabeceras de seguridad). |
+| `public/widget.js` | Widget cliente (burbuja arrastrable, selector de avatar dinámico, reconocimiento y síntesis de voz, modo oscuro). |
+| `public/avatars/` | Sprites e imágenes de Hacki para cada estado (`default`, `thinking`, `active`, `offline`, `busy`, `voice`). |
+| `public/eventos.json` | Cartelera de eventos, ferias, talleres, sedes, horarios y enlaces directos de inscripción. |
+| `public/faq.json` | Preguntas frecuentes oficiales categorizadas con enlaces directos. |
+| `conocimiento_ecosistema.md` | Base de conocimiento integral sobre sedes (Club de Emprendedores, CPVs, NIDOs), marco municipal y trámites. |
+| `api/chat.js` | Endpoint serverless: Rate limiting, prompt guarding y consulta al LLM. |
+| `api/preguntas.js` | Panel de auditoría protegido con clave para revisar consultas no resueltas. |
+| `public/index.html` | Página de prueba local. |
+| `vercel.json` | Configuración de empaquetado para Vercel y cabeceras de seguridad. |
+| `.env` | Variables de entorno locales (clave `IA_KEY`, etc.). |
 
-## Cómo actualizar las respuestas
+---
 
-Editá `public/faq.json`. Cada entrada tiene este formato:
+## Configuración de la API Key de la IA
 
-```json
-{
- "q": "¿Quién es el coordinador de la carrera?",
- "a": "El coordinador de la carrera es Torres Federico.",
- "kw": "coordinador coordinadora coordina autoridad responsable",
- "s": 15
-}
+Para que Hacki responda preguntas abiertas mediante IA:
+
+### 1. Pruebas Locales:
+Creá o editá el archivo `.env` en la raíz del proyecto y colocá tu clave:
+```ini
+IA_KEY=gsk_tu_clave_de_groq_aqui
+IA_URL=https://api.groq.com/openai/v1/chat/completions
+IA_MODELO=llama-3.3-70b-versatile,openai/gpt-oss-20b,llama-3.1-8b-instant
 ```
+> [!TIP]
+> Podés obtener una clave gratuita y de alta velocidad en [Groq Cloud Console](https://console.groq.com/keys).
 
-- `q`: la pregunta tal como se muestra en los botones sugeridos.
-- `a`: la respuesta. Los links (`https://...` o dominios `.edu.ar`) se vuelven clickeables.
-- `kw`: palabras clave sueltas, en minúscula y sin tildes, separadas por espacios. Es lo que usa Hacki para reconocer la pregunta
-  (tolera errores de tipeo). Agregá sinónimos.
-- `s` (opcional): si lo ponés, la pregunta se ofrece como sugerencia; los números chicos aparecen primero.
-- `sd` (opcional, poné `1`): marca una respuesta que todavía no tiene el dato completo, así queda registrado cuántas personas la piden.
+### 2. Despliegue en Vercel:
+En tu proyecto de Vercel ve a **Settings > Environment Variables** y cargá:
+- `IA_KEY`: Tu clave de API (ej. de Groq).
+- `ALLOWED_ORIGINS` (opcional): Sitios web autorizados a incrustar el chat (ej. `https://munissj.gob.ar`).
+- `ADMIN_KEY` (opcional): Clave secreta para acceder al panel de `/api/preguntas`.
 
-Reglas del formato JSON: comillas dobles siempre, una coma entre entradas (y ninguna después de la última) y los saltos de línea
-dentro de una respuesta se escriben `\n`. Después de editar, abrí `https://TU-DOMINIO/faq.json` en el navegador: si se ve el texto, el
-formato está bien. Los cambios tardan hasta 5 minutos en verse.
+---
 
-Si cambia un dato importante (costos, fechas, coordinador), actualizalo también en `conocimiento_carrera.md` para que la IA no use el valor viejo.
+## Cómo incrustar el Widget en cualquier página web
 
-## Cómo ponerlo en otra página
-
-Pegá esto antes de `</body>`:
+Agregá este script antes de la etiqueta de cierre `</body>`:
 
 ```html
-<script src="https://andresito-seven.vercel.app/widget.js" data-color="#0066ff" defer></script>
+<script src="https://TU-DOMINIO.vercel.app/widget.js" data-color="#0066ff" defer></script>
 ```
 
-Atributos opcionales:
-
-| Atributo | Qué hace | Ejemplo |
-|---|---|---|
-| `data-color` | Color principal | `#0066ff` |
-| `data-nombre` | Nombre del asistente | `Hacki` |
-| `data-posicion` | Posición inicial de la burbuja | `izquierda` |
-| `data-icono` | Imagen propia para la burbuja | `https://.../logo.png` |
-| `data-api` | Dirección de `api/chat` si es otra | `https://.../api/chat` |
-| `data-faq` | Dirección del `faq.json` si es otro | `https://.../faq.json` |
-
-Para que funcione en un sitio que no sea el de Vercel, agregá su dirección (por ejemplo `https://www.dominio-del-instituto.edu.ar`)
-en la variable `ALLOWED_ORIGINS` de Vercel y hacé un Redeploy.
-
-## Despliegue en Vercel
-
-1. Importá el repositorio. **Root Directory vacío** (si dice `public`, la carpeta `api` no se despliega y el chat da error 404).
-2. En *Settings > Environment Variables* cargá:
-
-| Variable | Obligatoria | Qué es |
-|---|---|---|
-| `IA_KEY` | Sí | Clave de la IA (Groq u otro proveedor compatible con OpenAI). |
-| `IA_MODELO` | No | Uno o varios modelos separados por coma; si el primero no existe, prueba el siguiente. |
-| `IA_URL` | No | Endpoint del proveedor. Por defecto, Groq. |
-| `ALLOWED_ORIGINS` | No | Sitios externos autorizados, separados por coma. |
-| `LIMITE_IP_HORA` / `LIMITE_DIA` | No | Mensajes por IP por hora (20) y totales por día (500). |
-| `ADMIN_KEY` | Para `/api/preguntas` | Clave larga para ver las preguntas sin respuesta. |
-| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Recomendadas | Base gratuita (Upstash) para límites confiables y para guardar las preguntas sin respuesta. |
-
-3. Hacé un Redeploy después de cambiar variables.
-4. Verificación: `https://TU-DOMINIO/api/chat` debe mostrar `{"error":"Método no permitido."}` y, en *Logs*, la línea `[INFO] base de conocimiento: ...`
-   debe mostrar números mayores a cero (si dice 0, la función no está leyendo los archivos).
-
-## Mejorar con el uso
-
-Entrá a `https://TU-DOMINIO/api/preguntas?clave=TU_ADMIN_KEY`: muestra las preguntas que no tuvieron respuesta en la FAQ, agrupadas por
-cantidad. Pasá las más repetidas a `public/faq.json`. Se guardan sin IP y con correos, teléfonos, números largos y links reemplazados.
-No se detectan nombres propios.
-
-## Mantenimiento
-
-- **La clave de la IA puede vencer.** Si el chat deja de usar la IA, revisá la fecha de vencimiento en el panel del proveedor y generá otra clave.
-- **Los modelos gratuitos cambian de nombre.** Si en *Logs* aparece `IA respondió 404`, actualizá `IA_MODELO` con un modelo vigente.
-- **Seguridad:** la clave vive solo en variables de entorno, el chat limita el uso por IP, valida el origen y no guarda datos personales.
-  Activá la verificación en dos pasos en GitHub y Vercel: quien controle el repositorio controla el código que corre en las páginas donde se inserte el chat.
+### Atributos opcionales:
+- `data-nombre`: Nombre del asistente (por defecto `Hacki`).
+- `data-color`: Color principal de la interfaz (ej. `#0066ff`).
+- `data-posicion`: `izquierda` o `derecha` (por defecto `derecha`).
+- `data-faq`: Ruta alternativa a `faq.json`.
+- `data-eventos`: Ruta alternativa a `eventos.json`.

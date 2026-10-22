@@ -1,6 +1,6 @@
-/* Hacki - chatbot de la carrera. Se integra con:
+/* Hacki - chatbot de eventos emprendedores. Se integra con:
    <script src="https://TU-DOMINIO/widget.js" data-color="#0066ff" defer></script>
-   Atributos opcionales: data-nombre, data-posicion="izquierda", data-icono, data-api, data-faq. Ver README.md */
+   Atributos opcionales: data-nombre, data-posicion="izquierda", data-icono, data-api, data-faq, data-eventos. Ver README.md */
 (function () {
   var script = document.currentScript;
   var color = script.dataset.color || "#0066ff";
@@ -10,16 +10,17 @@
   var origen = new URL(script.src).origin;
   var api = script.dataset.api || origen + "/api/chat";
   var faqUrl = script.dataset.faq || origen + "/faq.json";
+  var eventosUrl = script.dataset.eventos || origen + "/eventos.json";
   var historial = [], vozActiva = false, preguntadas = {}, rec = null, ocupado = false, FAQ = [];
 
   function leer(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function escribir(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-  // ---- Búsqueda en las FAQ (tolerante a errores de tipeo) ----
-  function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, " "); }
-  var VACIAS = " que hay entre como para cual cuale por una uno los las del con mas esta esto ano carre cuant ";
+  // ---- Búsqueda en FAQ y Eventos (tolerante a errores de tipeo) ----
+  function norm(s) { return String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, " "); }
+  var VACIAS = " que hay entre como para cual cuale por una uno los las del con mas esta esto ano donde cuando quien tiene ";
   function stem(w) { return w.slice(0, 5); }
-  function utiles(s) { return norm(s).split(/\s+/).filter(function (w) { return w.length > 2 && VACIAS.indexOf(" " + stem(w) + " ") < 0 && !cerca(w, "carrera"); }); }
+  function utiles(s) { return norm(s).split(/\s+/).filter(function (w) { return w.length > 2 && VACIAS.indexOf(" " + stem(w) + " ") < 0; }); }
   function lev(a, b) {
     var p = [], i, j;
     for (j = 0; j <= b.length; j++) p[j] = j;
@@ -34,28 +35,74 @@
     if (a.length < 5 || b.length < 5 || Math.abs(a.length - b.length) > 2) return false;
     return lev(a, b) <= (Math.max(a.length, b.length) >= 9 ? 2 : 1);
   }
-  function prepararFAQ(lista) {
-    FAQ = lista.filter(function (f) { return f && typeof f.q === "string" && typeof f.a === "string"; })
-      .map(function (f, i) { f.i = i; f.pal = utiles(f.kw || f.q); return f; });
+
+  function prepararTodo(listaFAQ, listaEventos) {
+    var arr = [];
+    var idx = 0;
+    if (Array.isArray(listaFAQ)) {
+      listaFAQ.forEach(function (f) {
+        if (!f) return;
+        var q = f.pregunta || f.q;
+        var a = f.respuesta || f.a;
+        if (!q || !a) return;
+        var link = f.enlace ? "\n\n🔗 Enlace directo: " + f.enlace : "";
+        var extraKw = (f.kw || (q + " " + (f.categoria || "") + " " + (f.id || ""))).replace(/_/g, " ");
+        arr.push({
+          i: idx++,
+          q: q,
+          a: a + (f.enlace && a.indexOf(f.enlace) < 0 ? link : ""),
+          s: f.s || (f.categoria === "Eventos proximos" ? 1 : 10),
+          categoria: f.categoria || "General",
+          pal: utiles(extraKw + " " + q)
+        });
+      });
+    }
+    if (Array.isArray(listaEventos)) {
+      listaEventos.forEach(function (ev) {
+        if (!ev || !ev.titulo) return;
+        var desc = "📅 " + ev.titulo + (ev.categoria ? " (" + ev.categoria + ")" : "") +
+          (ev.descripcion ? "\n" + ev.descripcion : "") +
+          (ev.sede ? "\n📍 Sede: " + ev.sede : "") +
+          (ev.ubicacion ? " (" + ev.ubicacion + ")" : "") +
+          (ev.horario ? "\n🕒 Horario: " + ev.horario : "") +
+          (ev.precio ? " | Costo: " + ev.precio : "") +
+          (ev.enlace ? "\n🔗 Enlace de inscripción: " + ev.enlace : "");
+        var kwEv = (ev.titulo + " " + (ev.sede || "") + " " + (ev.ubicacion || "") + " " + (ev.categoria || "") + " " + (ev.descripcion || "")).replace(/_/g, " ");
+        arr.push({
+          i: idx++,
+          q: "¿De qué trata o cuándo es " + ev.titulo + "?",
+          a: desc.trim(),
+          s: 2,
+          categoria: "Eventos",
+          pal: utiles(kwEv + " " + ev.titulo)
+        });
+      });
+    }
+    FAQ = arr;
   }
+
   function buscar(t) {
     var nt = norm(t).replace(/\s+/g, " ").trim();
-    for (var i = 0; i < FAQ.length; i++) if (norm(FAQ[i].q).replace(/\s+/g, " ").trim() === nt) return FAQ[i];
+    if (!nt) return null;
+    for (var i = 0; i < FAQ.length; i++) {
+      if (norm(FAQ[i].q).replace(/\s+/g, " ").trim() === nt) return FAQ[i];
+    }
     var qs = utiles(t), mejor = null, max = 0;
     FAQ.forEach(function (f) {
       var p = qs.filter(function (w) { return f.pal.some(function (k) { return cerca(w, k); }); }).length;
       if (p > max) { max = p; mejor = f; }
     });
-    if (max === 0 || (max === 1 && qs.length > 1) || (max >= 2 && max / qs.length < 0.5)) return null;
+    if (max === 0 || (max === 1 && qs.length > 2) || (max >= 2 && max / qs.length < 0.4)) return null;
     return mejor;
   }
-  var AYUDA = " Preguntame por materias, duración, horarios, requisitos de ingreso o salida laboral.";
+
+  var AYUDA = " Preguntame por eventos próximos, ferias, talleres, el Club de Emprendedores o requisitos para stands.";
   function charla(t) {
     var n = norm(t).replace(/\s+/g, " ").trim();
     if (!n) return null;
-    if (n.replace(/\b(hola|holis|buenas|buenos|dias|tardes|noches|buen|dia|hey|que|tal|como|estas|andas|todo|bien)\b/g, "").trim() === "") return "¡Hola! Soy " + nombre + ", el asistente de la carrera." + AYUDA;
-    if (/^(muchas )?gracias\b|^(genial|perfecto|ok|dale|listo|excelente)$/.test(n)) return "¡De nada! Si tenés otra duda sobre la carrera, preguntame.";
-    if (/^(chau|adios|hasta luego|nos vemos)\b/.test(n)) return "¡Hasta luego! Cualquier duda sobre la carrera, acá estoy.";
+    if (n.replace(/\b(hola|holis|buenas|buenos|dias|tardes|noches|buen|dia|hey|que|tal|como|estas|andas|todo|bien)\b/g, "").trim() === "") return "¡Hola! Soy " + nombre + ", el asistente del Ecosistema de Eventos Emprendedores de San Salvador de Jujuy." + AYUDA;
+    if (/^(muchas )?gracias\b|^(genial|perfecto|ok|dale|listo|excelente)$/.test(n)) return "¡De nada! Si tenés otra duda sobre los eventos o ferias, preguntame.";
+    if (/^(chau|adios|hasta luego|nos vemos)\b/.test(n)) return "¡Hasta luego! Cualquier consulta sobre eventos o actividades municipales, acá estoy.";
     return null;
   }
 
@@ -206,16 +253,23 @@
     msgs.appendChild(c); msgs.scrollTop = msgs.scrollHeight;
   }
   function sugerencias(n) { 
-    return FAQ.filter(function (f) { return f.s && !preguntadas[f.i]; }).sort(function (a, b) { return a.s - b.s; }).slice(0, n || 3);
+    var count = n || 3;
+    var disponibles = FAQ.filter(function (f) { return !preguntadas[f.i]; });
+    var prioritarias = disponibles.filter(function (f) { return f.s; }).sort(function (a, b) { return a.s - b.s; });
+    if (prioritarias.length >= count) return prioritarias.slice(0, count);
+    return disponibles.slice(0, count);
   }
   function bienvenida() {
-    agregar("¡Hola! Soy " + nombre + " 👋, tu chatbot de JujuyTech. ¿En qué te puedo ayudar?", "a");
-    agregar("Mis respuestas son orientativas: para trámites consultá en tu Municipio. Las preguntas que no sé responder se guardan sin datos personales para mejorar.", "nt");
+    agregar("¡Hola! Soy " + nombre + " 👋, tu asistente del Ecosistema de Eventos Emprendedores de San Salvador de Jujuy. ¿En qué te puedo ayudar hoy?", "a");
+    agregar("Consultá sobre eventos, ferias, talleres, sedes del municipio y trámites para emprendedores.", "nt");
     chips(sugerencias(4));
   }
   bienvenida();
-  fetch(faqUrl, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }).then(function (l) {
-    prepararFAQ(Array.isArray(l) ? l : []);
+  Promise.all([
+    fetch(faqUrl, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }),
+    fetch(eventosUrl, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; })
+  ]).then(function (res) {
+    prepararTodo(res[0], res[1]);
     if (!msgs.querySelector(".u")) chips(sugerencias(4)); 
   });
 
@@ -265,7 +319,7 @@
         cambiarEstadoSprite("active", 3500);
       } catch (e) {
         historial.pop();
-        responder(el, e && e.limite ? e.message : "No tengo ese dato. Probá con alguna de estas preguntas o consultá en la secretaría del IES N° 6 de Perico.", false, "error");
+        responder(el, e && e.limite ? e.message : "No tengo ese dato por el momento. Podés probar con alguna de las opciones sugeridas o consultar en el Club de Emprendedores de San Salvador de Jujuy.", false, "error");
         cambiarEstadoSprite("offline", 3500);
       }
       chips(sugerencias());
